@@ -1,42 +1,66 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
   background-color: #f5f5f5;
   color: #333;
 }
 header {
-  background-color: blue;
-  color: white;
-  padding: 20px;
-  text-align: center;
+  background-color: #141416;
+  color: #fff;
+  padding: 30px 0;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
 }
 
-nav a {
-  color: white;
-  margin: 0 15px;
-  text-decoration: none;
+.container {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font-size: 2em;
   font-weight: bold;
+  color: #fff;
+}
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 40px;
 }
 
-nav a:hover {
-  color: #00bfff;
+.menu li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.menu li a:hover {
+  color: red;
 }
 .produtos {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
+  padding: 20px 5%;
+  text-align: center;
 }
 
+.produtos h2 {
+  margin-bottom: 30px;
+  font-size: 1.8em;
+  color: #222;
+}
+
+.lista-produtos {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 .card {
-  background-color: white;
+  background-color: #fff;
   border-radius: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  padding: 15px;
-  width: 200px;
-  text-align: center;
-  transition: transform 0.2s ease;
+  width: 270px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
 .card:hover {
@@ -49,23 +73,38 @@ nav a:hover {
 }
 
 .card h3 {
-  margin: 10px 0 5px;
-}
-
-.card p {
-  font-weight: bold;
+  margin-top: 10px;
+  font-size: 1.1em;
   color: #222;
 }
 
-.card button {
-  background-color: #00bfff;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
+.card p {
+  font-size: 0.9em;
+  margin: 10px 0;
 }
 
-.card button:hover {
-  background-color:;
+.preco {
+  font-weight: bold;
+  color: red;
+}
+
+button {
+  background-color: #0077ff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #005ccc;
+}
+footer {
+  text-align: center;
+  background-color: #1e1e2f;
+  color: #fff;
+  padding: 15px 0;
+  margin-top: 40px;
 }
