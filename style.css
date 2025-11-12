@@ -1,6 +1,7 @@
 body {
   background-color: #f5f5f5;
   color: #333;
+  font-family: 'poppins', sans-serif;
 }
 header {
   background-color: #141416;
@@ -61,6 +62,10 @@ header {
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  height: 480px;
+  justify-content: space-between;
 }
 
 .card:hover {
@@ -70,6 +75,8 @@ header {
 .card img {
   width: 100%;
   border-radius: 10px;
+  height: 180px;
+  object-fit: cover;
 }
 
 .card h3 {
@@ -81,11 +88,13 @@ header {
 .card p {
   font-size: 0.9em;
   margin: 10px 0;
+  line-height: 1.4em;
 }
 
 .preco {
   font-weight: bold;
   color: red;
+  margin-top: auto;
 }
 
 button {
