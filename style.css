@@ -96,7 +96,6 @@ header {
   color: red;
   margin-top: auto;
 }
-
 button {
   background-color: #0077ff;
   color: #fff;
@@ -106,7 +105,6 @@ button {
   cursor: pointer;
   transition: 0.3s;
 }
-
 button:hover {
   background-color: #005ccc;
 }
@@ -116,4 +114,31 @@ footer {
   color: #fff;
   padding: 15px 0;
   margin-top: 40px;
+}
+.filtros {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.filtro-btn {
+  background-color:#141416;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.filtro-btn:hover {
+  background-color: #0077ff;
+  color: white;
+}
+
+.filtro-btn.ativo {
+  background-color: #0077ff;
+  color: white;
 }
