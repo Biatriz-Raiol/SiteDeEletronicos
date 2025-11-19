@@ -14,7 +14,7 @@
             <ul class="menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="produtos.html">Produtos</a></li>
-                <li><a href="#">Carrinho</a></li>
+                <li><a href="carrinho.html">Carrinho <span id="cart-count" class="cart-count">0</span></a></li>
                 <li><a href="login.html">Cadastro/Login</a></li>
             </ul>
         </nav>
@@ -41,7 +41,7 @@
             Memória: 256 GB e 8 GB (RAM)<br>
             Beleza em tinânio. Controle total da câmera. Fotos impressionantes.</p>
         <p class="preco">R$ 8.500,00</p>
-        <button>Adicionar ao carrinho</button>
+        <button class="btn-add">Adicionar ao carrinho</button>
     </div>
     <div class="card" data-categoria="relógios">
         <img src="img/relógio vivoactive.jpg" alt="relógio vivoactive">
@@ -50,7 +50,7 @@
             Cor: Prata<br>
             Alumínio reforçado, bateria de 24 horas,Manter a conexão, monitorar sua saúde e ficar em segurança. </p>
             <p class="preco">R$ 1.500,00</p>
-            <button>Adicionar ao carrinho</button>
+            <button class="btn-add">Adicionar ao carrinho</button>
     </div>
     <div class="card" data-categoria="fones">
         <img src="img/fone Bluetooth.jpg" alt="Fone JBL Tune 230NC">
@@ -61,7 +61,7 @@
             Bateria: Até 18 horas de reprodução<br>
             Design confortável e som de alta qualidade.</p>
         <p class="preco">R$ 150,00</p>
-        <button>Adicionar ao carrinho</button>
+        <button class="btn-add">Adicionar ao carrinho</button>
     </div>
     <div class="card" data-categoria="relógios">
         <img src="img/relógio apple watch.jpg" alt="Apple Watch">
@@ -70,7 +70,7 @@
             Cor:Branco<br>
             Manter a conexão, monitorar sua saúde e ficar em segurança. o Apple Watch SE é cheio de possibilidades ao alcance do seu pulso</p>
         <p class="preco">R$ 1.000,00</p>
-        <button>Adicionar ao carrinho</button>
+        <button class="btn-add">Adicionar ao carrinho</button>
     </div>
     <div class="card" data-categoria="celulares">
         <img src="img/Samsung Galaxy S24.jpg" alt="samsung galaxy s24">
@@ -80,7 +80,7 @@
             Memória: 256 GB e 12GB (RAM)<br>
             O Design moderno e sofisticado do Galaxy S24 combina com o desempenho poderoso e a câmera de alta resolução para capturar cada momento com clareza impressionante.</p>
             <p class="preco">R$ 5.000,00</p>
-            <button>Adicionar ao carrinho</button>
+            <button class="btn-add">Adicionar ao carrinho</button>
             </div>
     <div class="card" data-categoria="caixa de som">
         <img src="img/JBL, Caixa de Som, PartyBox Stage 320,.jpg" alt="jbl partybox com rodas">
@@ -90,7 +90,7 @@
             Potência: 240W RMS<br>
             Iluminação personalizável, conectividade Bluetooth e bateria de longa duração para festas sem fim.</p>
             <p class="preco">R$ 4.200,00</p>
-            <button>Adicionar ao carrinho</button>
+            <button class="btn-add">Adicionar ao carrinho</button>
     </div>
     <div class="card" data-categoria="TV">
         <img src="img/Samsung Combo Vision AI TV 43.jpg" alt="samsung smart tv 43">
@@ -100,7 +100,7 @@
             Resolução: 4K UHD<br>
             Experiência de visualização imersiva com inteligência artificial para otimizar a qualidade da imagem e som.</p>
             <p class="preco">R$ 2.500,00</p>
-            <button>Adicionar ao carrinho</button>
+            <button class="btn-add">Adicionar ao carrinho</button>
     </div>
     <div class="card" data-categoria="tablet">
         <img src="img/Samsung Tablet Galaxy Tab S10 Lite.jpg" alt="samsung galaxy tab s10 lite">
@@ -110,7 +110,7 @@
             Tela: 10.4 polegadas<br>
             Desempenho potente com processador octa-core, ideal para trabalho e entretenimento em qualquer lugar.</p>
             <p class="preco">R$ 4.000,00</p>
-            <button>Adicionar ao carrinho</button>
+            <button class="btn-add">Adicionar ao carrinho</button>
     </div>
     <div class="card" data-categoria="câmera">
         <img src="img/camera de ação GoPro HERO.jpg" alt="camera de ação gopro">
@@ -120,7 +120,7 @@
             Resolução: 4K60<br>
             Capture cada aventura com qualidade de cinema, resistente e à prova d'água até 10 metros.</p>
             <p class="preco">R$ 3.200,00</p>
-            <button>Adicionar ao carrinho</button>
+            <button class="btn-add">Adicionar ao carrinho</button>
     </div>
     <div class="card" data-categoria="caixa de som">
         <img src="img/caixa de som JBL.jpg" alt="caixa de som jbl">
@@ -130,7 +130,7 @@
             Potência: 30W RMS<br>
             Som potente e graves profundos em um design compacto e resistente à água.</p>
             <p class="preco">R$ 700,00</p>
-            <button>Adicionar ao carrinho</button>
+            <button class="btn-add">Adicionar ao carrinho</button>
     </div>
     <div class="card" data-categoria="celulares">
         <img src="img/IPHONE 16 ROSA.jpg" alt="iphope 16 pro Max rosa">
@@ -140,7 +140,7 @@
             Memória: 256 GB e 8 GB (RAM)<br>
             Beleza em rosa. Controle total da câmera. Fotos impressionantes.</p>
             <p class="preco">R$ 6.500,00</p>
-            <button>Adicionar ao carrinho</button>
+            <button class="btn-add">Adicionar ao carrinho</button>
     </div>
     <div class="card" data-categoria="celulares">
         <img src="img/IPHONE_13.jpg" alt="iphope 13">
@@ -150,13 +150,14 @@
             Memória:256 GB e 8GB <br>
             O sistema de câmera dupla mais avançado em um iphone. Chip a15 bionic com velocidade impressionante </p>
             <p class="preco">R$ 4.200,00</p>
-            <button>Adicionar ao carrinho</button>
+            <button class="btn-add">Adicionar ao carrinho</button>
     </div>
     </div>
 </main>
 <footer>
     <p>© 2025 TechWorld - Todos os direitos reservados para o grupo.</p>
 </footer>
+<div id="toast" class="toast"></div>
 <script src="script.js"></script>
 </body>
 </html>

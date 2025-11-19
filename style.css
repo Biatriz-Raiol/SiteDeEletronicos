@@ -2,8 +2,14 @@ body {
   background-color: #f5f5f5;
   color: #333;
   font-family: 'poppins', sans-serif;
+  padding-top: 100px;
 }
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   background-color: #141416;
   color: #fff;
   padding: 30px 0;
@@ -143,97 +149,11 @@ footer {
   color: white;
 }
 
-/*PAGINA DE LOGIN E CADASTRO*/
-
-form {
-  position: relative;
-  z-index: 1; 
-  
-}
-
-.container-login {
-  width: 420px;
-  background-color: transparent;
-  border: 2px solid #ffffff;
-  border-radius: 10px;
-  color: #000000;
-  padding: 30px 40px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-  margin-right: 80px;
-  position: relative;
-  z-index: 1;
-}
-
-.container-login h1 {
-  font-size: 36px;
-  text-align: center;
-}
-
-.input-box {
-  position: relative;
-  width: 100%;
-  height: 50px;
-  margin: 30px 0;
-}
-.input-box input {
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  border: 2px solid #000000;
-  border-radius: 40px;
-  outline: none;
-  font-size: 16px;
-  color:#000000;
-  padding: 20px 45px 20px 20px;
-}
-
-.input-box input::placeholder {
-  color: #000000;
-}
-
-.input-box i {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 20px;
-
-}
-
-.senha a {
-  text-decoration: none;
-  color: #000000;
-  font-size: 13px;
-}
-
-.senha a:hover {
-  text-decoration: underline;
-}
-
-.senha {
-  display: flex;
-  justify-content: space-between;
-  margin-top: -15px;
-  margin-left: 15px; 
-  
-}
-
-.login {
-  width: 100%;
-  height: 50px;
-  background-color: #ffffff;
-  border: none;
-  border-radius: 40px;
-  cursor: pointer;
-  font-size: 16px;
-  color: #000000;
-  font-weight: 600;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-  margin-top: 30px;
-}
-
-.login:hover {
-  background-color: transparent;
-  border: 2px solid #000000;
-  color:#000000;
+.cart-count {
+    background: red;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 50%;
+    font-size: 14px;
+    margin-left: 6px;
 }
