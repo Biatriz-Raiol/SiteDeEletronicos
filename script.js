@@ -125,15 +125,23 @@ function atualizarContadorCarrinho() {
     }
 }
 
-// Sistema de checkout
 document.addEventListener('DOMContentLoaded', function() {
-    const checkoutBtn = document.querySelector(".btn-checkout");
-    if (checkoutBtn) {
-        checkoutBtn.addEventListener("click", () => {
-            const modal = document.getElementById("checkout-modal");
-            if (modal) modal.style.display = "flex";
+    
+    const proximoBtn = document.getElementById("btn-proximo-pagamento");
+    if (proximoBtn) {
+        proximoBtn.addEventListener("click", () => {
+            mudarEtapa(1);
         });
     }
+    const modal = document.getElementById("checkout-modal");
+    if (modal) {
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    }
+});
 
     const calcularFreteBtn = document.getElementById("btn-calcular-frete");
     if (calcularFreteBtn) {
@@ -200,8 +208,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Inicialização
     atualizarContadorCarrinho();
     if (typeof carregarCarrinho === "function") {
         carregarCarrinho();
