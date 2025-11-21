@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Se houver erro, redireciona de volta para login.html
 if (isset($error)) {
     header("Location: login.html?error=" . urlencode($error));
     exit;
