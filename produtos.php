@@ -70,7 +70,6 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </footer>
 
 <script>
-// Filtros de produtos
 const botoesFiltro = document.querySelectorAll(".filtro-btn");
 const cards = document.querySelectorAll(".card");
 
