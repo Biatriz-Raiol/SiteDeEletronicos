@@ -147,13 +147,7 @@ if (cart.length === 0) {
 function abrirDadosEntrega() {
     document.getElementById("areaEndereco").style.display = "block";
 }
-#areaEndereco {
-transition: 0.3;
-opacity: 0;
-}
-#areaEndereco.show {
-opacity: 1;
-}
+
 function mascaraCEP() {
     let cep = document.getElementById("cep").value;
     cep = cep.replace(/\D/g, "");
