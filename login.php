@@ -1,20 +1,20 @@
 <?php
-require_once __DIR__ . '/config/database.php';
 session_start();
+require 'conexao.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
-    $senha  = $_POST['senha'] ?? '';
+    $senha = $_POST['senha'] ?? '';
 
     if ($email && $senha) {
-        $stmt = $pdo->prepare("SELECT id, nome, senha_hash FROM users WHERE email = ?");
+        $stmt = $pdo->prepare("SELECT id, nome, senha FROM usuarios WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
-        if ($user && password_verify($senha, $user['senha_hash'])) {
-            session_regenerate_id(true);
+        
+        if ($user && password_verify($senha, $user['senha'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_nome'] = $user['nome'];
-            header("Location: index.php");
+            header("Location: index.html");
             exit;
         } else {
             $error = "Usuário ou senha inválidos.";
@@ -22,5 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $error = "Preencha email e senha.";
     }
+}
+
+// Se houver erro, redireciona de volta para login.html
+if (isset($error)) {
+    header("Location: login.html?error=" . urlencode($error));
+    exit;
 }
 ?>
