@@ -13,44 +13,27 @@ CREATE TABLE produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
     descricao TEXT,
+    categoria VARCHAR(50),
     preco DECIMAL(10,2) NOT NULL,
     imagem VARCHAR(255),
     estoque INT DEFAULT 0
 );
 
-CREATE TABLE carrinho (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
-);
-
-CREATE TABLE itens_carrinho (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_carrinho INT NOT NULL,
-    id_produto INT NOT NULL,
-    quantidade INT DEFAULT 1,
-    FOREIGN KEY (id_carrinho) REFERENCES carrinho(id),
-    FOREIGN KEY (id_produto) REFERENCES produtos(id)
-);
-
 CREATE TABLE pedidos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    valor_total DECIMAL(10,2) NOT NULL,
-    data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status ENUM('pendente', 'pago', 'enviado', 'entregue', 'cancelado') DEFAULT 'pendente',
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+    cliente_nome VARCHAR(100) NOT NULL,
+    cliente_email VARCHAR(100) NOT NULL,
+    total DECIMAL(10,2) NOT NULL,
+    data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE itens_pedido (
+CREATE TABLE pedido_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    id_pedido INT NOT NULL,
-    id_produto INT NOT NULL,
+    pedido_id INT NOT NULL,
+    produto_id INT NOT NULL,
     quantidade INT NOT NULL,
     preco_unitario DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (id_pedido) REFERENCES pedidos(id),
-    FOREIGN KEY (id_produto) REFERENCES produtos(id)
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id)
 );
 
 INSERT INTO produtos (nome, descricao, categoria, preco, imagem) VALUES
@@ -62,7 +45,7 @@ INSERT INTO produtos (nome, descricao, categoria, preco, imagem) VALUES
 ("JBL PartyBox com Rodas", "Cor: Preto. 240W RMS, iluminação personalizável e bateria duradoura.", "caixa de som", 4200.00, "img/JBL, Caixa de Som, PartyBox Stage 320,.jpg"),
 ("Samsung Vision AI TV 43\"", "Cor: Preto. Resolução 4K UHD. Inteligência artificial para imagem e som.", "TV", 2500.00, "img/Samsung Combo Vision AI TV 43.jpg"),
 ("Samsung Galaxy Tab S10 Lite", "Cor: Prata. Tela 10.4'', desempenho octa-core.", "tablet", 4000.00, "img/Samsung Tablet Galaxy Tab S10 Lite.jpg"),
-("GoPro HERO", "Cor: Preto. 4K60, resistente e à prova d’água até 10m.", "câmera", 3200.00, "img/camera de ação GoPro HERO.jpg"),
+("GoPro HERO", "Cor: Preto. 4K60, resistente e à prova d'água até 10m.", "câmera", 3200.00, "img/camera de ação GoPro HERO.jpg"),
 ("Caixa de Som JBL Flip 6", "Cor: Preto. 30W RMS, resistente à água e som potente.", "caixa de som", 700.00, "img/caixa de som JBL.jpg"),
 ("Apple iPhone 15 Rosa", "Cor: Rosa. 256 GB / 8 GB RAM. Fotos impressionantes.", "celulares", 6500.00, "img/IPHONE 16 ROSA.jpg"),
 ("Apple iPhone 13 Luz das Estrelas", "Cor: Branco. 256 GB, chip A15 Bionic.", "celulares", 4200.00, "img/IPHONE_13.jpg");
