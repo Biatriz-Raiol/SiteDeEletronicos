@@ -47,7 +47,7 @@ try {
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <?php include 'includes/header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <main class="container">
         <h1>Nossos Produtos</h1>
@@ -126,8 +126,8 @@ try {
         <?php endif; ?>
     </main>
 
-    <?php include 'includes/footer.php'; ?>
+    <?php include 'footer.php'; ?>
     
-    <script src="assets/js/script.js"></script>
+    <script script.js"></script>
 </body>
 </html>
