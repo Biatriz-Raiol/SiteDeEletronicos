@@ -34,6 +34,7 @@ CREATE TABLE pedido_items (
     quantidade INT NOT NULL,
     preco_unitario DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id)
+    FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
 
 INSERT INTO produtos (nome, descricao, categoria, preco, imagem) VALUES
