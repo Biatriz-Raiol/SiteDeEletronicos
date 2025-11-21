@@ -137,10 +137,10 @@ foreach ($_SESSION['carrinho'] as $item) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho - HawkTech</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <?php include 'includes/header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <main class="container">
         <h1>Meu Carrinho</h1>
@@ -234,8 +234,8 @@ foreach ($_SESSION['carrinho'] as $item) {
         <?php endif; ?>
     </main>
 
-    <?php include 'includes/footer.php'; ?>
+    <?php include 'footer.php'; ?>
     
-    <script src="assets/js/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
