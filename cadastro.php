@@ -63,10 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HawkTech - Cadastro</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <?php include 'includes/header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <div class="container auth-container">
         <div class="auth-form">
@@ -110,6 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <?php include 'includes/footer.php'; ?>
+    <?php include 'footer.php'; ?>
 </body>
 </html>
