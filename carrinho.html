@@ -30,7 +30,25 @@
     <div class="checkout-container">
         <button class="btn-checkout">Finalizar Compra</button>
     </div>
-    
+        <div id="areaEndereco" style="display:none; margin-top:20px;">
+            <h3>Endereço de Entrega</h3>
+            <label>CEP:</label>
+            <input type="text" id="cep" maxlength="9" oninput="mascaraCEP()" onblur="buscarCEP()"><br><br>
+            <label>Rua:</label>
+            <input type="text" id="rua">
+            <label>Cidade:</label>
+            <input type="text" id="cidade">
+            <label>UF:</label>
+            <input type="text" id="uf" maxlength="2">
+            <br><br>
+        <button onclick="calcularFretePorCEP()">Calcular Frete</button>
+        <p id="frete"></p>
+        <p id="totalFinal"></p><br>
+
+    <button onclick="validarPedido()">Finalizar Pedido</button>
+</div>
+
+
     <script src="script.js"></script>
 </body>
 </html>

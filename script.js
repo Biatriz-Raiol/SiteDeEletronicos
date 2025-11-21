@@ -144,3 +144,97 @@ window.onload = function() {
 if (cart.length === 0) {
     document.querySelector('.checkout-container').style.display = 'none';
 }
+function abrirDadosEntrega() {
+    document.getElementById("areaEndereco").style.display = "block";
+}
+#areaEndereco {
+transition: 0.3;
+opacity: 0;
+}
+#areaEndereco.show {
+opacity: 1;
+}
+function mascaraCEP() {
+    let cep = document.getElementById("cep").value;
+    cep = cep.replace(/\D/g, "");
+    if (cep.length > 5) {
+        cep = cep.replace(/(\d{5})(\d)/, "$1-$2");
+    }
+    document.getElementById("cep").value = cep;
+}
+
+function buscarCEP() {
+    const cep = document.getElementById("cep").value.replace(/\D/g, "");
+
+    if (cep.length !== 8) {
+        alert("CEP inválido!");
+        return;
+    }
+
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.erro) {
+                alert("CEP não encontrado!");
+                return;
+            }
+
+            document.getElementById("Rua").value = data.logradouro;
+            document.getElementById("Cidade").value = data.localidade;
+            document.getElementById("UF").value = data.uf;
+        })
+        .catch(() => {
+            alert("Erro ao consultar CEP!");
+        });
+}
+function calcularFretePorCEP() {
+    const uf = document.getElementById("uf").value.toUpperCase();
+    let valorFrete = 0;
+
+    switch (uf) {
+        case "SP":
+        case "RJ":
+        case "MG":
+        case "ES":
+            valorFrete = 15;
+            break;
+
+        case "PR":
+        case "SC":
+        case "RS":
+            valorFrete = 20;
+            break;
+
+        default:
+            valorFrete = 25;
+            break;
+    }
+    const totalCarrinho = 8500.00;
+    const totalFinal = totalCarrinho + valorFrete;
+
+    document.getElementById("frete").innerHTML = `Frete: R$ ${valorFrete.toFixed(2)}`;
+    document.getElementById("totalFinal").innerHTML = `Total: R$ ${totalFinal.toFixed(2)}`;
+}
+function validarPedido() {
+    const cep = document.getElementById("CEP").value.replace(/\D/g, "");
+    const rua = document.getElementById("Rua").value;
+    const cidade = document.getElementById("Cidade").value;
+    const uf = document.getElementById("UF").value;
+
+    if (cep.length !== 8) {
+        alert("Digite um CEP válido.");
+        return false;
+    }
+
+    if (!rua || !cidade || !uf) {
+        alert("Preencha o endereço completo.");
+        return false;
+    }
+
+    alert("Pedido finalizado com sucesso!");
+    return true;
+}
+
+
+
+
