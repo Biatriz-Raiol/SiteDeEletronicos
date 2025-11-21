@@ -105,9 +105,6 @@ function removerItem(index) {
     carregarCarrinho();
 }
 
-
-window.onload = carregarCarrinho;
-
 function mostrarToast(mensagem) {
     const toast = document.getElementById("toast");
     toast.textContent = mensagem;
@@ -134,14 +131,7 @@ function atualizarContadorCarrinho() {
     }
 }
 
-window.onload = function() {
-    atualizarContadorCarrinho();
-    if (typeof carregarCarrinho === "function") {
-        carregarCarrinho();
-    }
-}
-
-if (cart.length === 0) {
+if (carrinho.length === 0) {
     document.querySelector('.checkout-container').style.display = 'none';
 }
 ddocument.querySelector(".btn-checkout").addEventListener("click", () => {
@@ -202,6 +192,11 @@ document.getElementById("btn-finalizar-pagamento").addEventListener("click", () 
     atualizarContadorCarrinho();
     mudarEtapa(2);
 });
+window.addEventListener("load", () => {
+    atualizarContadorCarrinho();
+    carregarCarrinho();
+});
+
 
 
 
