@@ -2,7 +2,9 @@
 session_start();
 require 'conexao.php';
 
-if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
 
 $action = $_GET['action'] ?? null;
 
@@ -41,6 +43,7 @@ if ($action === 'remove') {
     foreach ($_SESSION['cart'] as $k => $item) {
         if ($item['produto_id'] == $pid) {
             unset($_SESSION['cart'][$k]);
+            break;
         }
     }
     $_SESSION['cart'] = array_values($_SESSION['cart']);
@@ -57,27 +60,34 @@ if ($action === 'clear') {
 if ($action === 'save' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = trim($_POST['nome'] ?? '');
     $email = trim($_POST['email'] ?? '');
+    
     if (empty($nome) || empty($email) || empty($_SESSION['cart'])) {
         $error = 'Preencha nome, email e adicione produtos ao carrinho.';
     } else {
         $total = 0;
-        foreach ($_SESSION['cart'] as $item) $total += $item['preco'] * $item['quantidade'];
-
-        $pdo->beginTransaction();
-        $stmt = $pdo->prepare('INSERT INTO pedidos (cliente_nome, cliente_email, total) VALUES (?, ?, ?)');
-        $stmt->execute([$nome, $email, $total]);
-        $pedido_id = $pdo->lastInsertId();
-
-        $stmtItem = $pdo->prepare('INSERT INTO pedido_items (pedido_id, produto_id, quantidade, preco_unitario) VALUES (?, ?, ?, ?)');
         foreach ($_SESSION['cart'] as $item) {
-            $stmtItem->execute([$pedido_id, $item['produto_id'], $item['quantidade'], $item['preco']]);
+            $total += $item['preco'] * $item['quantidade'];
         }
-        $pdo->commit();
-        $_SESSION['cart'] = [];
-        $success = 'Pedido salvo com sucesso! ID do pedido: ' . $pedido_id;
+
+        try {
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare('INSERT INTO pedidos (cliente_nome, cliente_email, total) VALUES (?, ?, ?)');
+            $stmt->execute([$nome, $email, $total]);
+            $pedido_id = $pdo->lastInsertId();
+
+            $stmtItem = $pdo->prepare('INSERT INTO pedido_items (pedido_id, produto_id, quantidade, preco_unitario) VALUES (?, ?, ?, ?)');
+            foreach ($_SESSION['cart'] as $item) {
+                $stmtItem->execute([$pedido_id, $item['produto_id'], $item['quantidade'], $item['preco']]);
+            }
+            $pdo->commit();
+            $_SESSION['cart'] = [];
+            $success = 'Pedido salvo com sucesso! ID do pedido: ' . $pedido_id;
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            $error = 'Erro ao salvar pedido: ' . $e->getMessage();
+        }
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -103,36 +113,43 @@ if ($action === 'save' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 <main class="produtos">
     <h2>Seu Carrinho</h2>
     <?php if (!empty($error)): ?>
-        <div class="error"><?= htmlspecialchars($error) ?></div>
+        <div class="error" style="color: red; padding: 10px; background: #ffe6e6; border: 1px solid red; margin: 10px 0;"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
     <?php if (!empty($success)): ?>
-        <div class="success"><?= htmlspecialchars($success) ?></div>
+        <div class="success" style="color: green; padding: 10px; background: #e6ffe6; border: 1px solid green; margin: 10px 0;"><?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
 
     <?php if (empty($_SESSION['cart'])): ?>
         <p>Seu carrinho está vazio.</p>
+        <p><a href="produtos.php">Continuar comprando</a></p>
     <?php else: ?>
-        <table border="1" cellpadding="8" cellspacing="0">
-            <tr><th>Produto</th><th>Preço unit.</th><th>Qtd</th><th>Subtotal</th><th>Ação</th></tr>
-            <?php $total=0; foreach ($_SESSION['cart'] as $item): $subtotal = $item['preco'] * $item['quantidade']; $total += $subtotal; ?>
+        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+            <tr style="background: #f0f0f0;"><th>Produto</th><th>Preço unit.</th><th>Qtd</th><th>Subtotal</th><th>Ação</th></tr>
+            <?php $total=0; foreach ($_SESSION['cart'] as $item): 
+                $subtotal = $item['preco'] * $item['quantidade']; 
+                $total += $subtotal; 
+            ?>
                 <tr>
                     <td><?= htmlspecialchars($item['nome']) ?></td>
                     <td>R$ <?= number_format($item['preco'],2,',','.') ?></td>
                     <td><?= $item['quantidade'] ?></td>
                     <td>R$ <?= number_format($subtotal,2,',','.') ?></td>
-                    <td><a href="carrinho.php?action=remove&pid=<?= $item['produto_id'] ?>">Remover</a></td>
+                    <td><a href="carrinho.php?action=remove&pid=<?= $item['produto_id'] ?>" style="color: red; text-decoration: none;">Remover</a></td>
                 </tr>
             <?php endforeach; ?>
-            <tr><td colspan="3"><strong>Total</strong></td><td colspan="2"><strong>R$ <?= number_format($total,2,',','.') ?></strong></td></tr>
+            <tr style="background: #f0f0f0; font-weight: bold;">
+                <td colspan="3"><strong>Total</strong></td>
+                <td colspan="2"><strong>R$ <?= number_format($total,2,',','.') ?></strong></td>
+            </tr>
         </table>
 
         <h3>Finalizar pedido</h3>
-        <form method="post" action="carrinho.php?action=save">
-            <label>Nome: <input type="text" name="nome" required></label><br>
-            <label>Email: <input type="email" name="email" required></label><br>
-            <button type="submit">Salvar Pedido</button>
+        <form method="post" action="carrinho.php?action=save" style="max-width: 400px;">
+            <label>Nome: <input type="text" name="nome" required style="width: 100%; padding: 8px; margin: 5px 0;"></label><br>
+            <label>Email: <input type="email" name="email" required style="width: 100%; padding: 8px; margin: 5px 0;"></label><br>
+            <button type="submit" style="background: #0077ff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Salvar Pedido</button>
         </form>
-        <p><a href="carrinho.php?action=clear">Limpar carrinho</a></p>
+        <p><a href="carrinho.php?action=clear" style="color: red;">Limpar carrinho</a></p>
     <?php endif; ?>
 </main>
 <footer>
