@@ -17,10 +17,10 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HawkTech - Eletrônicos</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <?php include 'includes/header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <main class="container">
         <section class="hero">
@@ -41,9 +41,9 @@ try {
                     <?php foreach ($produtos_destaque as $produto): ?>
                         <div class="card" data-categoria="<?= htmlspecialchars($produto['categoria']) ?>">
                             <div class="card-image">
-                                <img src="<?= htmlspecialchars($produto['imagem']) ?>" 
+                                <?= htmlspecialchars($produto['imagem']) ?>" 
                                      alt="<?= htmlspecialchars($produto['nome']) ?>"
-                                     onerror="this.src='assets/img/placeholder.jpg'">
+                                     img/placeholder.jpg'">
                             </div>
                             <div class="card-content">
                                 <h3><?= htmlspecialchars($produto['nome']) ?></h3>
@@ -66,8 +66,8 @@ try {
         </section>
     </main>
 
-    <?php include 'includes/footer.php'; ?>
+    <?php include 'footer.php'; ?>
     
-    <script src="assets/js/script.js"></script>
+    <script = "script.js"></script>
 </body>
 </html>
