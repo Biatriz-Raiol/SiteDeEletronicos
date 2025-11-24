@@ -68,6 +68,6 @@ try {
 
     <?php include 'footer.php'; ?>
     
-    <script = "script.js"></script>
+    <script src= "script.js"></script>
 </body>
 </html>

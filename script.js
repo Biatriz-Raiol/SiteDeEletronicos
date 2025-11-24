@@ -136,6 +136,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('HawkTech - Sistema inicializado');
 });
-    }
-}
-
