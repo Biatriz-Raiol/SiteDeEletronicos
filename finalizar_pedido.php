@@ -13,13 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     try {
         $pdo->beginTransaction();
-        
-        // Inserir pedido
+
         $stmt_pedido = $pdo->prepare("INSERT INTO pedidos (cliente_nome, cliente_email, total, usuario_id) VALUES (?, ?, ?, ?)");
         $stmt_pedido->execute([$cliente_nome, $cliente_email, $total, $usuario_id]);
         $pedido_id = $pdo->lastInsertId();
-        
-        // Inserir itens do pedido
+
         $stmt_item = $pdo->prepare("INSERT INTO pedido_items (pedido_id, produto_id, quantidade, preco_unitario, nome_produto) VALUES (?, ?, ?, ?, ?)");
         
         foreach ($itens as $item) {
@@ -27,8 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nome_produto = $item['nome'] ?? 'Produto Desconhecido';
             $quantidade = $item['quantidade'] ?? 1;
             $preco = $item['preco'] ?? 0;
-            
-            // Tentar encontrar o produto no banco
+
             if (isset($item['nome'])) {
                 $stmt_produto = $pdo->prepare("SELECT id FROM produtos WHERE nome LIKE ? LIMIT 1");
                 $stmt_produto->execute(['%' . $item['nome'] . '%']);
@@ -38,8 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $produto_id = $produto['id'];
                 }
             }
-            
-            // Inserir item (produto_id pode ser NULL)
+
             $stmt_item->execute([
                 $pedido_id, 
                 $produto_id, 
