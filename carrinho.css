@@ -70,7 +70,7 @@ button {
 .checkout-container {
     width: 100%;
     display: flex;
-    justify-content: flex-end; /* fica alinhado à direita */
+    justify-content: flex-end;
     margin-top: 20px;
 }
 
@@ -182,7 +182,6 @@ button {
     color: #000;
 }
 
-/* Responsivo */
 @media (max-width: 600px) {
     .modal-content {
         width: 95%;
