@@ -47,8 +47,6 @@ header {
   color: red;
 }
 
-/*FORMULÁRIO DE LOGIN E CASDASTRO*/
-
 .login-wrapper {
   display: flex;
   justify-content: center; 
