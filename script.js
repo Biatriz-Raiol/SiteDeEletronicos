@@ -1,138 +1,229 @@
-document.addEventListener('DOMContentLoaded', function() {
-    function mostrarToast(mensagem, tipo = 'success') {
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${tipo}`;
-        toast.textContent = mensagem;
-        toast.style.cssText = `
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: ${tipo === 'success' ? '#28a745' : '#dc3545'};
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 5px;
-            z-index: 10000;
-            animation: slideIn 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        `;
-        
-        document.body.appendChild(toast);
-        
-        setTimeout(() => {
-            toast.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
+const botoesFiltro = document.querySelectorAll(".filtro-btn");
+const cards = document.querySelectorAll(".card");
+
+botoesFiltro.forEach(botao => {
+    botao.addEventListener("click", () => {
+    botoesFiltro.forEach(btn => btn.classList.remove("ativo"));
+    botao.classList.add("ativo");
+
+    const categoria = botao.getAttribute("data-categoria");
+
+    cards.forEach(card => {
+        if (categoria === "todos" || card.getAttribute("data-categoria") === categoria) {
+        card.style.display = "flex";
+    } else {
+        card.style.display = "none";
     }
-
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-    `;
-    document.head.appendChild(style);
-
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            const required = this.querySelectorAll('[required]');
-            let valid = true;
-            
-            required.forEach(input => {
-                if (!input.value.trim()) {
-                    valid = false;
-                    input.style.borderColor = '#dc3545';
-                } else {
-                    input.style.borderColor = '';
-                }
-            });
-            
-            if (!valid) {
-                e.preventDefault();
-                mostrarToast('Preencha todos os campos obrigatórios', 'error');
-            }
-        });
     });
-
-    function atualizarContadorCarrinho() {
-        console.log('Contador do carrinho atualizado');
-    }
-
-    const filtroBtns = document.querySelectorAll('.filtro-btn');
-    filtroBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            if (this.getAttribute('href') === '#') {
-                e.preventDefault();
-            }
-        });
-    });
-
-    const numberInputs = document.querySelectorAll('input[type="number"]');
-    numberInputs.forEach(input => {
-        input.addEventListener('change', function() {
-            if (this.value < parseInt(this.min)) {
-                this.value = this.min;
-            }
-            if (this.value > parseInt(this.max)) {
-                this.value = this.max;
-            }
-        });
-    });
-
-    const submitButtons = document.querySelectorAll('button[type="submit"]');
-    submitButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            if (this.form.checkValidity()) {
-                this.disabled = true;
-                this.innerHTML = '<span class="loading">Carregando...</span>';
-                setTimeout(() => {
-                    this.disabled = false;
-                    this.innerHTML = this.getAttribute('data-original-text') || this.textContent;
-                }, 3000);
-            }
-        });
-    });
-
-    const addToCartForms = document.querySelectorAll('.add-to-cart-form');
-    addToCartForms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const button = this.querySelector('button');
-            const originalText = button.textContent;
-            
-            button.disabled = true;
-            button.textContent = 'Adicionando...';
-            
-            fetch(this.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    mostrarToast('Produto adicionado ao carrinho!');
-                    atualizarContadorCarrinho();
-                } else {
-                    mostrarToast(data.error || 'Erro ao adicionar produto', 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                mostrarToast('Erro ao adicionar produto', 'error');
-            })
-            .finally(() => {
-                button.disabled = false;
-                button.textContent = originalText;
-            });
-        });
-    });
-
-    console.log('HawkTech - Sistema inicializado');
 });
+});
+
+
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+const botoes = document.querySelectorAll(".btn-add");
+
+
+botoes.forEach((btn) => {
+    btn.addEventListener("click", function () {
+
+
+        const card = this.closest(".card");
+
+
+        const nome = card.querySelector("h3").textContent;
+        const preco = card.querySelector(".preco").textContent.replace("R$", "").replace(".", "").replace(",", ".");
+        const imagem = card.querySelector("img").getAttribute("src");
+
+        const produto = {
+            nome: nome,
+            preco: Number(preco),
+            imagem: imagem,
+            quantidade: 1
+        };
+
+        carrinho.push(produto);
+
+
+        localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+
+        mostrarToast("Produto adicionado ao carrinho!");
+
+        atualizarContadorCarrinho();
+mostrarToast("Produto adicionado ao carrinho!");
+
+
+    });
+});
+
+
+
+function carregarCarrinho() {
+    const lista = document.getElementById("lista-carrinho");
+    const totalSpan = document.getElementById("total");
+
+    if (!lista || !totalSpan) return;
+
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    lista.innerHTML = "";
+    let total = 0;
+
+    carrinho.forEach((item, index) => {
+        total += item.preco * item.quantidade;
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <img src="${item.imagem}" width="80">
+            <strong>${item.nome}</strong> - R$ ${item.preco}
+            <br>
+            Quantidade: ${item.quantidade}
+            <button onclick="removerItem(${index})">Remover</button>
+            <hr>
+        `;
+        lista.appendChild(li);
+    });
+
+    totalSpan.textContent = total.toFixed(2);
+
+
+    const checkoutBtn = document.querySelector(".checkout-container");
+
+    if (carrinho.length === 0) {
+        checkoutBtn.style.display = "none";
+    } else {
+        checkoutBtn.style.display = "flex"; 
+    }
+}
+
+
+function removerItem(index) {
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    carrinho.splice(index, 1);
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    carregarCarrinho();
+}
+
+
+window.onload = carregarCarrinho;
+
+function mostrarToast(mensagem) {
+    const toast = document.getElementById("toast");
+    toast.textContent = mensagem;
+
+    toast.classList.add("show");
+
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2500);
+
+
+    document.addEventListener("click", () => {
+        toast.classList.remove("show");
+    }, { once: true });
+}
+
+function atualizarContadorCarrinho() {
+    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    const contador = document.getElementById("cart-count");
+
+    if (contador) {
+        contador.textContent = carrinho.length;
+    }
+}
+
+window.onload = function() {
+    atualizarContadorCarrinho();
+    if (typeof carregarCarrinho === "function") {
+        carregarCarrinho();
+    }
+}
+
+if (cart.length === 0) {
+    document.querySelector('.checkout-container').style.display = 'none';
+}
+function abrirDadosEntrega() {
+    document.getElementById("areaEndereco").style.display = "block";
+}
+function mascaraCEP() {
+    let cep = document.getElementById("cep").value;
+    cep = cep.replace(/\D/g, "");
+    if (cep.length > 5) {
+        cep = cep.replace(/(\d{5})(\d)/, "$1-$2");
+    }
+    document.getElementById("cep").value = cep;
+}
+
+function buscarCEP() {
+    const cep = document.getElementById("cep").value.replace(/\D/g, "");
+
+    if (cep.length !== 8) {
+        alert("CEP inválido!");
+        return;
+    }
+
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.erro) {
+                alert("CEP não encontrado!");
+                return;
+            }
+
+            document.getElementById("Rua").value = data.logradouro;
+            document.getElementById("Cidade").value = data.localidade;
+            document.getElementById("UF").value = data.uf;
+        })
+        .catch(() => {
+            alert("Erro ao consultar CEP!");
+        });
+}
+function calcularFretePorCEP() {
+    const uf = document.getElementById("uf").value.toUpperCase();
+    let valorFrete = 0;
+
+    switch (uf) {
+        case "SP":
+        case "RJ":
+        case "MG":
+        case "ES":
+            valorFrete = 15;
+            break;
+
+        case "PR":
+        case "SC":
+        case "RS":
+            valorFrete = 20;
+            break;
+
+        default:
+            valorFrete = 25;
+            break;
+    }
+    const totalCarrinho = 8500.00;
+    const totalFinal = totalCarrinho + valorFrete;
+
+    document.getElementById("frete").innerHTML = `Frete: R$ ${valorFrete.toFixed(2)}`;
+    document.getElementById("totalFinal").innerHTML = `Total: R$ ${totalFinal.toFixed(2)}`;
+}
+function validarPedido() {
+    const cep = document.getElementById("CEP").value.replace(/\D/g, "");
+    const rua = document.getElementById("Rua").value;
+    const cidade = document.getElementById("Cidade").value;
+    const uf = document.getElementById("UF").value;
+
+    if (cep.length !== 8) {
+        alert("Digite um CEP válido.");
+        return false;
+    }
+
+    if (!rua || !cidade || !uf) {
+        alert("Preencha o endereço completo.");
+        return false;
+    }
+
+    alert("Pedido finalizado com sucesso!");
+    return true;
+}
