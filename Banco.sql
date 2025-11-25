@@ -1,10 +1,6 @@
--- HawkTech - Banco de Dados Completo e Corrigido
--- Execute este arquivo no MySQL para recriar todo o banco
-
 CREATE DATABASE IF NOT EXISTS loja_eletronicos;
 USE loja_eletronicos;
 
--- Tabela de usuários
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -13,7 +9,6 @@ CREATE TABLE usuarios (
     data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabela de produtos
 CREATE TABLE produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -25,7 +20,6 @@ CREATE TABLE produtos (
     data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabela de pedidos
 CREATE TABLE pedidos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cliente_nome VARCHAR(100) NOT NULL,
@@ -37,19 +31,17 @@ CREATE TABLE pedidos (
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
 );
 
--- Tabela de itens do pedido (CORRIGIDA - produto_id permite NULL)
 CREATE TABLE pedido_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pedido_id INT NOT NULL,
-    produto_id INT NULL, -- Permite NULL para casos onde o produto não é encontrado
+    produto_id INT NULL,
     quantidade INT NOT NULL,
     preco_unitario DECIMAL(10,2) NOT NULL,
-    nome_produto VARCHAR(100) NOT NULL, -- Nome do produto no momento da compra
+    nome_produto VARCHAR(100) NOT NULL,
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id) ON DELETE CASCADE,
     FOREIGN KEY (produto_id) REFERENCES produtos(id) ON DELETE SET NULL
 );
 
--- Inserir produtos com nomes exatos que correspondem ao HTML
 INSERT INTO produtos (nome, descricao, preco, categoria, imagem, estoque) VALUES
 ('Apple iPhone 16 Pro Max', 'Cor: Titânio Preto, Memória: 256 GB e 8 GB (RAM), Beleza em titânio. Controle total da câmera. Fotos impressionantes.', 8500.00, 'celulares', 'img/celular_iphone_16.jpg', 10),
 ('Samsung Galaxy Watch8 Smartwatch', 'Cor: Prata, Alumínio reforçado, bateria de 24 horas, Manter a conexão, monitorar sua saúde e ficar em segurança.', 1500.00, 'relógios', 'img/relógio vivoactive.jpg', 18),
@@ -64,23 +56,18 @@ INSERT INTO produtos (nome, descricao, preco, categoria, imagem, estoque) VALUES
 ('Apple iPhone 15 Rosa', 'Cor: Rosa, Memória: 256 GB e 8 GB (RAM), Beleza em rosa. Controle total da câmera. Fotos impressionantes.', 6500.00, 'celulares', 'img/IPHONE 16 ROSA.jpg', 8),
 ('Apple iPhone 13 - Luz das Estrelas', 'Cor: Branco, Memória: 256 GB e 8GB, O sistema de câmera dupla mais avançado em um iPhone. Chip A15 Bionic com velocidade impressionante.', 4200.00, 'celulares', 'img/IPHONE_13.jpg', 15);
 
--- Inserir um usuário de exemplo
 INSERT INTO usuarios (nome, email, senha) VALUES 
-('João Silva', 'joao@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'); -- senha: password
+('João Silva', 'joao@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi')
 
--- Criar usuário para a aplicação (opcional)
 CREATE USER IF NOT EXISTS 'loja_user'@'localhost' IDENTIFIED BY 'senha_segura123';
 GRANT ALL PRIVILEGES ON loja_eletronicos.* TO 'loja_user'@'localhost';
 FLUSH PRIVILEGES;
 
--- Visualizar as tabelas criadas
 SHOW TABLES;
 
--- Ver estrutura das tabelas
 DESCRIBE usuarios;
 DESCRIBE produtos;
 DESCRIBE pedidos;
 DESCRIBE pedido_items;
 
--- Ver produtos inseridos
 SELECT id, nome, preco, categoria FROM produtos;
