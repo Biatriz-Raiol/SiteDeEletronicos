@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
@@ -21,49 +22,16 @@
         </div>
     </header>
 
-    <main style="padding: 20px;">
+    <main>
         <h2>Carrinho</h2>
-        <ul id="lista-carrinho" style="list-style: none; padding: 0;"></ul>
+        <ul id="lista-carrinho"></ul>
         <p><strong>Total: R$ <span id="total">0</span></strong></p>
-
-        <div class="checkout-container" style="display: none;">
-            <button class="btn-checkout">Finalizar Compra</button>
-        </div>
     </main>
 
-    <div id="checkout-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="etapa etapa-cep active">
-                <h2>Calcular Frete</h2>
-                <input type="text" id="cep-input" placeholder="Digite seu CEP" style="padding: 10px; margin: 10px 0; width: 200px;">
-                <button id="btn-calcular-frete" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Calcular</button>
-                <p id="resultado-frete" style="margin: 10px 0;"></p>
-                <button id="btn-proximo-pagamento" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">Próximo</button>
-            </div>
-            
-            <div class="etapa etapa-pagamento">
-                <h2>Forma de Pagamento</h2>
-                <select id="pagamento" style="padding: 10px; margin: 10px 0; width: 100%;">
-                    <option value="pix">Pix à vista</option>
-                    <option value="boleto">Boleto</option>
-                    <option value="cartao">Cartão de Crédito</option>
-                    <option value="debito">Cartão de Débito</option>
-                </select>
-                <div id="parcelamento" style="display:none; margin-top:10px;">
-                    <label>Parcelas</label>
-                    <select id="num-parcelas" style="padding: 5px; margin-left: 10px;"></select>
-                </div>
-                <button id="btn-finalizar-pagamento" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">Finalizar Pagamento</button>
-            </div>
-            
-            <div class="etapa etapa-final">
-                <h2>Compra Finalizada com Sucesso!!</h2>
-                <p>Obrigado pela compra!!</p>
-                <button onclick="document.getElementById('checkout-modal').style.display = 'none';" style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">Fechar</button>
-            </div>
-        </div>
+    <div class="checkout-container">
+        <button class="btn-checkout">Finalizar Compra</button>
     </div>
-
+    
     <script src="script.js"></script>
 </body>
 </html>
