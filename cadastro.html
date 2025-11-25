@@ -14,7 +14,7 @@
                 <ul class="menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="produtos.html">Produtos</a></li>
-                    <li><a href="carrinho.html">Carinho</a></li>
+                    <li><a href="carrinho.html">Carrinho</a></li>
                     <li><a href="login.html">Cadastro/Login</a></li>
                 </ul>
             </nav>
@@ -23,19 +23,20 @@
 
     <div class="cadastro-wrapper">
         <div class="container-login">
-            <form>
+            <form id="form-cadastro">
                 <h1>Cadastro</h1>
+                <div id="mensagem" style="margin-bottom: 20px; font-weight: bold;"></div>
                 <div class="input-box">
-                    <input placeholder="Nome" type="text">
+                    <input name="nome" placeholder="Nome" type="text" required>
                 </div>
                 <div class="input-box">
-                    <input placeholder="Sobrenome" type="text">
+                    <input name="sobrenome" placeholder="Sobrenome" type="text" required>
                 </div>
                 <div class="input-box">
-                    <input placeholder="Email" type="email">
+                    <input name="email" placeholder="Email" type="email" required>
                 </div>
                 <div class="input-box">
-                    <input placeholder="Crie uma senha" type="password">
+                    <input name="senha" placeholder="Crie uma senha" type="password" required>
                 </div>
 
                 <button type="submit" class="login">Cadastre-se</button>
@@ -43,5 +44,6 @@
         </div>       
     </div>
 
+    <script src="script.js"></script>
 </body>
 </html>
